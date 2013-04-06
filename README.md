@@ -11,3 +11,10 @@ The plan
  - Handle various error states (Disconnect, Forgotten kettle) [Not Yet Started]
  - Port HTML to Windows 8, Linux, Phonegap to allow ALL OF THE NOTIFICATIONS WHEN YOUR KETTLE IS HOT.  [Not Yet Started]
  
+Installation
+-----------
+Node.JS v0.8.21 runs the server, newer versions should probably work
+
+Using
+-----------
+After install Node.JS, use a command line and run 'node APP.js'
