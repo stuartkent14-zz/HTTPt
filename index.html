@@ -1,0 +1,58 @@
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="JS/socket.io.min.js"></script>
+<script>
+  var kettle;
+  var socket = io.connect('http://localhost');
+  socket.on('kettle', function (data) {
+    console.log(data);
+   
+	setData(data);
+	$('.connecting').remove();
+    socket.emit('my other event', { my: 'data' });
+  });
+  socket.on('boilStarted', function (data) {
+    console.log(data); 
+	setData(data);
+  });
+   socket.on('boilProgress', function (data) {
+    console.log(data);
+	setData(data);
+  });
+   socket.on('boilDone', function (data) {
+    console.log(data);
+	setData(data);
+  });
+  
+  
+  function startBoil() {socket.emit('startBoil', { targetTemperature: '70', unit: 'deg' });}
+  function changeWater() {socket.emit('changeWater');}
+  
+  function setData(data) { 
+   kettle = data;
+	if (kettle) {
+		$('.name').html(kettle.name);
+		$('.desposition').html(kettle.desposition);
+		$('.temperature').html(kettle.temperature);
+		$('.unit').html(kettle.unit);
+		$('.status').html(kettle.status);		
+	}
+  }
+</script>
+
+<style>
+body {margin:0px;}
+h1,h2,h3,h4,h5 {display:inline;}
+.connecting {width:100%; height:100%; color: whitesmoke;text-shadow:1px 1px 10px grey; font-weight:bold; font-size:50px; margin:20px;}
+</style>
+
+<body>
+<div class="connecting">Connecting... <i>Please wait!</i></div>
+Hi, I'm <h1 class="name"></h1>
+and I'm feeling <h2 class="desposition"></h2>
+my temperature is <h3 class="temperature"><span class="unit"></span></h3>
+<br/>
+	<h2><i class="status"></i></h2>
+<br/>
+<button onclick="startBoil()">Start Boiling</button>
+<button onclick="changeWater()">Change Water</button>
+</body>
